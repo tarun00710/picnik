@@ -8,7 +8,6 @@ export const PostSlice = createSlice({
       state.post = action.payload;
     },
     addPost(state, action) {
-      console.log(action.payload);
       const newPost = action.payload;
       state.post = state.post.concat(newPost);
     },

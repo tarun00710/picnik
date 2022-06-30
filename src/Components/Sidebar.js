@@ -1,23 +1,26 @@
 import React from "react";
 import { ListItem, ListItemButton, ListItemText, Switch , Box } from "@mui/material";
-import styled from "@emotion/styled";
+// import styled from "@emotion/styled";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import { PersonOutline,Home, SupervisedUserCircle,CameraEnhance, ModeNight } from "@mui/icons-material"
+import { Person,Home, SupervisedUserCircle,CameraEnhance, ModeNight,PersonAddAlt1 } from "@mui/icons-material"
+import { Link } from "react-router-dom";
 
 
-const StyleSidebar = styled("div")({
+// const StyleSidebar = styled("div")({
 //   display: "flex",
 //   flexDirection: "column",
 //   justifyContent: "center",
 //   position:"fixed"
-});
+// });
 
 const Sidebar = () => {
   return (
-      <Box sx={{display:{xs:"none",sm:"block"}}}>
+    <>
+    <Box>
     <Box position="fixed">
       <ListItem>
         <ListItemButton>
+        <Link style={{ textDecoration: "none", color: "#fff" }} to={"/Home"}>
           <ListItemIcon sx={{display:"flex",justifyContent:"center",alignItems:"center",}}>
             <Home
               color="secondary"
@@ -26,11 +29,13 @@ const Sidebar = () => {
             <ListItemText  color="#E0417E" primary="Home"
             />
           </ListItemIcon>
+          </Link>
         </ListItemButton>
       </ListItem>
 
       <ListItem>
         <ListItemButton>
+          <Link style={{ textDecoration: "none", color: "#fff" }} to={"/posts"}>
           <ListItemIcon sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
             <CameraEnhance
               color="secondary"
@@ -39,12 +44,13 @@ const Sidebar = () => {
             <ListItemText  color="#E0417E" primary="Posts"
             />
           </ListItemIcon>
+          </Link>
         </ListItemButton>
       </ListItem>
       <ListItem>
         <ListItemButton>
           <ListItemIcon sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-            <PersonOutline
+            <Person
               color="secondary"
               sx={{ marginRight: "0.5rem", fontSize: "1.5rem" }}
             />
@@ -55,6 +61,7 @@ const Sidebar = () => {
       </ListItem>
       <ListItem>
         <ListItemButton>
+        <Link style={{ textDecoration: "none", color: "#fff" }} to={"/followers"}>
           <ListItemIcon sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
             <SupervisedUserCircle
               color="secondary"
@@ -63,7 +70,22 @@ const Sidebar = () => {
              <ListItemText  color="#E0417E" primary="Followers"
             />
           </ListItemIcon>
+          </Link>
         </ListItemButton>
+      </ListItem>
+      <ListItem>
+      <Link style={{ textDecoration: "none", color: "#fff" }} to={"/followings"}>
+        <ListItemButton>
+          <ListItemIcon sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
+            <PersonAddAlt1
+              color="secondary"
+              sx={{ marginRight: "0.5rem", fontSize: "1.5rem" }}
+            />
+             <ListItemText  color="#E0417E" primary="Followings"
+            />
+          </ListItemIcon>
+        </ListItemButton>
+        </Link>
       </ListItem>
       <ListItem>
         <ListItemButton>
@@ -73,8 +95,11 @@ const Sidebar = () => {
           </ListItemIcon>
         </ListItemButton>
       </ListItem>
+      
     </Box>
     </Box>
+    </>
+      
   );
 };
 
