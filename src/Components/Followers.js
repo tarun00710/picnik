@@ -6,6 +6,7 @@ import {
   CardContent,
   Card,
   Avatar,
+  Button,
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect } from "react";
@@ -37,6 +38,23 @@ const Followers = () => {
     };
     getFollowingDetail();
   }, []);
+
+
+  const unFollowHandler = async(userId,unfollowId) => {
+    try {
+      const response = await axios.post(`http://localhost:5000/useraction/${userId}/removefollower/${unfollowId}`)
+      console.log(response.data)
+      if(response){
+        console.log("hello")
+        dispatch(userActions.getUserFollowing(response.data.getUpdatedUser.followings))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={4} md={3}>
@@ -114,6 +132,7 @@ const Followers = () => {
                       </Typography>
                     </Typography>
                   </Box>
+                  <Button onClick={() => unFollowHandler(user._id,eachUser._id)} variant="outlined">Unfollow</Button>
                 </CardContent>
               </Box>
             </Card>

@@ -49,6 +49,7 @@ const Sidebar = () => {
       </ListItem>
       <ListItem>
         <ListItemButton>
+        <Link style={{ textDecoration: "none", color: "#fff" }} to={"/profile"}>
           <ListItemIcon sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
             <Person
               color="secondary"
@@ -57,6 +58,7 @@ const Sidebar = () => {
              <ListItemText  color="#E0417E" primary="Profile"
             />
           </ListItemIcon>
+          </Link>
         </ListItemButton>
       </ListItem>
       <ListItem>

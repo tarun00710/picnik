@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, Toolbar, Typography } from "@mui/material";
 import {
   CameraRounded,
   AccountCircleRounded,
@@ -17,7 +17,6 @@ const StyledToolBar = styled(Toolbar)({
 
 const Navbar = () => {
   const userInfo = useSelector((state) => state.user);
-  console.log(userInfo);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
@@ -66,6 +65,7 @@ const Navbar = () => {
             >
               Logout
             </Typography>
+            <Avatar src={userInfo.user.avatar} alt/>
             <Logout></Logout>
           </Box>
         )}

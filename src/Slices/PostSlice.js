@@ -8,8 +8,10 @@ export const PostSlice = createSlice({
       state.post = action.payload;
     },
     addPost(state, action) {
-      const newPost = action.payload;
-      state.post = state.post.concat(newPost);
+      // const newPost = action.payload;
+      // state.post = state.post.concat(newPost);
+      // state.post = [...state.post,action.payload]
+      return {...state,post:[...state.post,action.payload]}
     },
     deletePost(state, action) {
       state.post = state.post.filter((post) => post._id !== action.payload);

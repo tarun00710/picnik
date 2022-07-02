@@ -44,7 +44,7 @@ const Signup = () => {
     }
   };
 
-  const previewImage = (file) => {
+ const previewImage = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
