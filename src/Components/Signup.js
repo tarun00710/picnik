@@ -77,15 +77,13 @@ const Signup = () => {
       const response = await axios({
         method: "post",
         url:
-          `http://localhost:5000/users/signup`,
+          `http://localhost:5001/users/signup`,
         data: form,
         headers: {
           "Content-Type": `multipart/form-data`
         }
       });
-      console.log(response.data);
       if (response.data.success === true) {
-        // dispatch(postAction.addPost(response.data.savedPost));
         setAddUser({ name: "",
         username: "",
         email: "",
@@ -99,12 +97,6 @@ const Signup = () => {
       console.log(error.message);
     }
   };
-
-
-
-
-
-
 
   return (
     <>

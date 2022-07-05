@@ -49,7 +49,6 @@ const PostBox = () => {
   const onClickHandler = async (e) => {
     e.preventDefault();
     try {
-      console.log(createPost.postContent);
       const form = new FormData();
       form.append("postText", createPost.postContent);
       form.append("photo", file);
@@ -61,7 +60,7 @@ const PostBox = () => {
           "Content-Type": `multipart/form-data`,
         },
       });
-      console.log(response.data);
+  
       if (response) {
         dispatch(postAction.addPost(response.data.savedPost));
         setCreatePost({ postContent: "", postImage: "" });
@@ -71,7 +70,6 @@ const PostBox = () => {
     }
   };
 
-  console.log(createPost);
   return (
     <form>
       <Box position="sticky">

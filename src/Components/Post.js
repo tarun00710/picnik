@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
+import { v4 as uuidv4 } from 'uuid';
+
 import {
   Avatar,
   Card,
@@ -41,19 +43,15 @@ const Post = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
   const { user } = userInfo;
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+ 
 
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/users/${user._id}/posts`
+          `http://localhost:5001/users/${user._id}/posts`
         );
-        console.log(response.data);
         let payloadData = response.data.getDetail.posts;
-        console.log(payloadData, "line23");
         if (response) {
           await dispatch(postAction.getPost(payloadData));
         }
@@ -66,33 +64,38 @@ const Post = () => {
 
   const post = useSelector((state) => state.post);
 
-  const deletePostHandler = async (postId) => {
+  //delete
+  const deletePost = async (postId) => {
     try {
-      console.log("i was clicked");
+      
       const response = await axios.post(
-        `http://localhost:5000/useraction/${user._id}/removePost/${postId}`
+        `http://localhost:5001/useraction/${user._id}/removePost/${postId}`
       );
-      console.log(response.data);
       if (response.data.success === true){
         dispatch(postAction.deletePost(postId));
-       setOpen(false)
+
       }
     } catch (error) {
       console.log(error);
     }
   };
+  //like
 
   const likeHandler = async (postId, userId) => {
+    console.log(postId,userId)
     const response = await axios.post(
-      `http://localhost:5000/useraction/${userId}/likePost/${postId}`
+      `http://localhost:5001/useraction/${userId}/likePost/${postId}`
     );
     console.log(response.data);
     if (response.data.success === true)
       dispatch(postAction.likePost({ postId, userId }));
   };
+
+  //dislike
   const dislikeHandler = async (postId, userId) => {
+    console.log(postId);
     const response = await axios.post(
-      `http://localhost:5000/useraction/${userId}/likePost/${postId}`
+      `http://localhost:5001/useraction/${userId}/dislikePost/${postId}`
     );
 
     if (response.data.success === true)
@@ -106,9 +109,10 @@ const Post = () => {
           <Sidebar />
         </Grid>
         <Grid item xs={8} md={8} pr={2}>
-          {post?.post?.map((eachPost) => {
+          {post?.post?.map((Post, i) => {
             return (
-              <Card sx={{ maxWidth: 420, marginTop: "2rem" }}>
+                
+              <Card key={uuidv4()}  sx={{ maxWidth: 420, marginTop: "2rem" }}>
                 <CardHeader
                   avatar={
                     <Avatar
@@ -118,69 +122,43 @@ const Post = () => {
                   }
                   action={
                     <IconButton aria-label="settings">
-                      <MoreVert onClick={handleOpen} />
-
-                      <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Box sx={style}>
-                          <Typography id="modal-modal-title">
-                            Remove this post ?
-                          </Typography>
-                          <Button
-                            onClick={() => deletePostHandler(eachPost._id)}
-                            sx={{ margin: "1rem 1rem 0 0" }}
-                            variant="outlined"
-                            endIcon={<Delete />}
-                          >
-                            Remove
-                          </Button>
-                          <Button
-                            sx={{ margin: "1rem 1rem 0 0" }}
-                            onClick={() => setOpen(false)}
-                          >
-                            Cancel
-                          </Button>
-                        </Box>
-                      </Modal>
+                      <Delete color="secondary" onClick={() => deletePost(Post._id)} />
                     </IconButton>
                   }
                   title={user.username}
-                  subheader={eachPost.timeStamp}
+                  subheader={Post.timeStamp}
                 />
+
                 <CardMedia
                   component="img"
                   height="auto"
                   sx={{ maxHeight: "300px" }}
-                  image={eachPost.postImage} //from database
-                  alt="Post image"
+                  image={Post.postImage} //from database
+                  // alt="Post image"
                 />
                 <CardContent>
                   <Typography variant="body2" color="text.secondary">
-                    {eachPost.postText}
+                    {Post.postText}
                   </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
                   <IconButton
-                    onClick={() => likeHandler(eachPost._id, user._id)}
+                    onClick={() => likeHandler(Post._id, user._id)}
                     aria-label="add to favorites"
                   >
                     <Favorite />
-                    <Typography>{eachPost.like.length}</Typography>
+                    <Typography>{Post.like.length}</Typography>
                   </IconButton>
                   <IconButton aria-label="Comment">
                     <ModeComment />
-                    <Typography>{eachPost.comments.length}</Typography>
+                    <Typography>{Post.comments.length}</Typography>
                   </IconButton>
                   <IconButton
-                    onClick={() => dislikeHandler(eachPost._id, user._id)}
+                    onClick={() => dislikeHandler(Post._id, user._id)}
                     aria-label="dislike"
                   >
                     <ThumbDownAlt />
-                    <Typography>{eachPost.dislike.length}</Typography>
+                    <Typography>{Post.dislike.length}</Typography>
                   </IconButton>
                 </CardActions>
               </Card>
