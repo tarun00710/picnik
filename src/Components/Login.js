@@ -46,7 +46,7 @@ const location = useLocation()
       console.log(error.message)
     }
   }
-  console.log(userInfo?.user)
+
 
   return (
      <form>

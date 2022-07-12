@@ -20,6 +20,10 @@ export const userSlice = createSlice({
             let newstate = {...state,user:{...state.user,followings:action.payload}}
             return newstate
         },
+        getUserFollowers(state,action){
+            let newstate = {...state,user:{...state.user,followers:action.payload}}
+            return newstate
+        },
         editUser(state,action){
             const {name,username,bio,avatar} = action.payload
             let newstate = {...state,user:{...state,name:name,username:username,bio:bio,avatar:avatar}}

@@ -11,6 +11,7 @@ import Homepage from "./Components/Homepage";
 import Followers from "./Components/Followers";
 import Following from "./Components/Following";
 import Profile from "./Components/Profile"
+import CommentBox from "./Components/CommentBox";
 function App() {
   return (
     <>
@@ -32,6 +33,7 @@ function App() {
           <Route path="/followers" element={<Followers />} />
           <Route path="/followings" element={<Following />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/posts/:postId/postcomment" element={<CommentBox/>} />
         </Routes>
       </Box>
     </>

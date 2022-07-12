@@ -14,8 +14,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {useNavigate } from "react-router-dom";
+import { userActions } from "../Slices/UserSlice";
 
 const style = {
   position: "absolute",
@@ -43,6 +44,7 @@ const Profile = () => {
   const handleClose = () => setOpen(false);
   const [file, setFile] = useState("");
   const navigate =  useNavigate()
+  const dispatch = useDispatch()
 
   const [inputValue,setInputValue] = useState({
     name:user.name,
@@ -59,7 +61,6 @@ const Profile = () => {
     };
   };
 
-console.log(inputValue)
   const inputHandler = (e) => {
     const {name,value,files} = e.target
     if (name === "name") {
@@ -72,41 +73,38 @@ console.log(inputValue)
       setInputValue({ ...inputValue, bio: value });
     }
     else{
-    previewImage(e.target.files[0])
+      console.log("line 74")
+     
     setInputValue({ ...inputValue, photo: files[0] });
+    previewImage(files[0])
     }
 
   }
   const profileUpdateHandler = async(e) => {
    
       try {
-        console.log("hello")
         const form = new FormData();
         form.append("name",inputValue?.name)
         form.append("username",inputValue?.username)
         form.append("photo",inputValue?.photo)
         form.append("bio",inputValue?.bio)
-        console.log(form)
-        console.log(typeof user._id,inputValue.photo)
-      const response = await axios.post({
+      const response = await axios({
         method: "post",
         url:
-          "http://localhost:5001/users/editprofile/62c29eb9040674c65d81e394",
+          `http://localhost:5001/users/edit/${user._id}`,
         data: form,
         headers: {
           "Content-Type": `multipart/form-data`
         }
       })
-      console.log(response.data)
+      if(response.data.success === true)
+        dispatch(userActions.editUser(response.data.updateUser))
       setOpen(false)
     } catch (error) {
       console.log(error)
     }
     e.preventDefault()
 }
-
-
-
 
   return (
     <Box
@@ -133,10 +131,10 @@ console.log(inputValue)
         />
         <CardContent>
           <Typography p={1} gutterBottom variant="h5" component="div">
-            Name: {user.name}
+            Name: {user?.name}
           </Typography>
           <Typography p={1} variant="body2" color="text.secondary">
-            Username: {user.username}
+            Username: {user?.username}
           </Typography>
           <Typography p={1} variant="body2" color="text.secondary">
             Bio: {user.bio}
@@ -145,13 +143,13 @@ console.log(inputValue)
             Email: {user.email}
           </Typography>
           <Typography p={1} variant="body2" color="text.secondary">
-            Followers: {user.followers.length}
+            Followers: {user?.followers?.length}
           </Typography>
           <Typography p={1} variant="body2" color="text.secondary">
-            Followings: {user.followings.length}
+            Followings: {user?.followings?.length}
           </Typography>
           <Typography pt={1} pl={1} variant="body2" color="text.secondary">
-            Posts: {post.length}
+            Posts: {post?.length}
           </Typography>
           <AvatarGroup max={5}>
             {post.map((post) => (
@@ -174,13 +172,11 @@ console.log(inputValue)
           <Avatar
             sx={{ width: "5rem", height: "5rem", borderColor: "red" }}
             src={file}
-            // alt={name}
           />
           <Button
             sx={{ borderRadius: "19px" }}
             variant="contained"
             component="label"
-            onClick={()=>previewImage()}
           >
             Add
             <input

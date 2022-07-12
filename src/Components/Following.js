@@ -24,7 +24,7 @@ const Following = () => {
     const getFollowingDetail = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/users/${user._id}`
+          `http://localhost:5001/users/${user._id}`
         );
         dispatch(
           userActions.getUserFollowing(response.data.getDetail.followings)
@@ -38,7 +38,7 @@ const Following = () => {
 
 const unFollowHandler = async(userId,unfollowId) => {
   try {
-    const response = await axios.post(`http://localhost:5000/useraction/${userId}/unfollow/${unfollowId}`)
+    const response = await axios.post(`http://localhost:5001/useraction/${userId}/unfollow/${unfollowId}`)
     console.log(response.data)
     if(response){
       console.log("hello")

@@ -34,6 +34,13 @@ export const PostSlice = createSlice({
           eachpost.dislike = eachpost.dislike.concat(action.payload.authorId);
         return eachpost;
       });
+    },
+    postComment(state,action){
+      state.post = state.post.map((eachpost) => {
+        if (eachpost._id === action.payload._id)
+          eachpost.comments = action.payload.comments;
+        return eachpost;
+      } )
     }
   }
 });

@@ -54,7 +54,7 @@ const PostBox = () => {
       form.append("photo", file);
       const response = await axios({
         method: "post",
-        url: `http://localhost:5000/userAction/${user._id}/upload`,
+        url: `http://localhost:5001/userAction/${user._id}/upload`,
         data: form,
         headers: {
           "Content-Type": `multipart/form-data`,

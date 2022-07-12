@@ -16,11 +16,9 @@ const Homepage = () => {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  //  backgroundAttachment:"fixed"
   });
   return (
     <Box sx={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-      {/* <StyledHomeImage src={homeLayout}/> */}
       <StyledHomeImage>
         <Link style={{ textDecoration: "none", color: "#fff" }} to={"/Home"}>
           <Button variant="contained" endIcon={<Send />}>

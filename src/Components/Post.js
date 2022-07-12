@@ -1,6 +1,5 @@
 import React, { useEffect} from "react";
 import { v4 as uuidv4 } from 'uuid';
-
 import {
   Avatar,
   Card,
@@ -11,9 +10,6 @@ import {
   IconButton,
   Typography,
   Grid,
-  Modal,
-  Button,
-  Box,
 } from "@mui/material";
 import {
   Favorite,
@@ -26,18 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import { postAction } from "../Slices/PostSlice";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "1px solid #E0417E",
-  boxShadow: 24,
-  p: 3,
-};
+import { Link } from "react-router-dom";
 
 const Post = () => {
   const dispatch = useDispatch();
@@ -116,6 +101,7 @@ const Post = () => {
                 <CardHeader
                   avatar={
                     <Avatar
+                    src={user.avatar}
                       sx={{ bgcolor: "#E0417E" }}
                       aria-label="recipe"
                     ></Avatar>
@@ -149,10 +135,12 @@ const Post = () => {
                     <Favorite />
                     <Typography>{Post.like.length}</Typography>
                   </IconButton>
+                  <Link to={`${Post._id}/postcomment`}>
                   <IconButton aria-label="Comment">
                     <ModeComment />
                     <Typography>{Post.comments.length}</Typography>
                   </IconButton>
+                  </Link>
                   <IconButton
                     onClick={() => dislikeHandler(Post._id, user._id)}
                     aria-label="dislike"

@@ -37,8 +37,6 @@ const Signup = () => {
     if (name === "confirmpassword") {
       setAddUser({ ...addUser, confirmpassword: value });
     } else {
-      console.log("file", files[0]);
-      // setAddUser({ ...addUser, uploadimage: files[0] });
       setFile(files[0])
       previewImage(files[0]);
     }
@@ -48,7 +46,6 @@ const Signup = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      console.log(reader.result);
       setAddUser({ ...addUser, previewimage: reader.result });
     };
   };

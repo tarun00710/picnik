@@ -23,13 +23,13 @@ const Followers = () => {
     const getFollowingDetail = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/users/${user._id}`
+          `http://localhost:5001/users/${user._id}`
         );
         console.log(response.data);
         // if(response){
         console.log(response.data.getDetail.followings);
         dispatch(
-          userActions.getUserFollowing(response.data.getDetail.followers)
+          userActions.getUserFollowers(response.data.getDetail.followers)
         );
         // }
       } catch (error) {
@@ -42,11 +42,11 @@ const Followers = () => {
 
   const unFollowHandler = async(userId,unfollowId) => {
     try {
-      const response = await axios.post(`http://localhost:5000/useraction/${userId}/removefollower/${unfollowId}`)
+      const response = await axios.post(`http://localhost:5001/useraction/${userId}/removefollower/${unfollowId}`)
       console.log(response.data)
       if(response){
         console.log("hello")
-        dispatch(userActions.getUserFollowing(response.data.getUpdatedUser.followings))
+        dispatch(userActions.getUserFollowers(response.data.getUpdatedUser.followers))
       }
     } catch (error) {
       console.log(error)
@@ -100,7 +100,7 @@ const Followers = () => {
                         component="span"
                         variant="subtitle1"
                       >
-                        {eachUser.followers.length}
+                        {eachUser.followers?.length}
                       </Typography>
                     </Typography>
                     <Typography
@@ -114,7 +114,7 @@ const Followers = () => {
                         component="span"
                         variant="subtitle1"
                       >
-                        {eachUser.followings.length}
+                        {eachUser.followings?.length}
                       </Typography>
                     </Typography>
                     <Typography
@@ -128,7 +128,7 @@ const Followers = () => {
                         component="span"
                         variant="subtitle1"
                       >
-                        {eachUser.posts.length}
+                        {eachUser.posts?.length}
                       </Typography>
                     </Typography>
                   </Box>

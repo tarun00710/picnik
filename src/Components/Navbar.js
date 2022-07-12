@@ -6,7 +6,7 @@ import {
   Logout,
 } from "@mui/icons-material";
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../Slices/UserSlice";
 
@@ -47,26 +47,30 @@ const Navbar = () => {
             <AccountCircleRounded />
           </Box>
         ) : (
-          <Box
-            onClick={() => {
-              dispatch(userActions.logoutUser());
-              navigate("/Home");
-            }}
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              ":hover": { cursor: "pointer", color: "#000000" },
-            }}
-          >
-            <Typography
+          <Box sx={{ display: "flex" }}>
+            <Box
+              mr={1}
+              onClick={() => {
+                dispatch(userActions.logoutUser());
+                navigate("/Home");
+              }}
               sx={{
-                mr: "10px",
+                display: "flex",
+                alignItems: "center",
+                ":hover": { cursor: "pointer", color: "#000000" },
               }}
             >
-              Logout
-            </Typography>
-            <Avatar src={userInfo.user.avatar} alt/>
-            <Logout></Logout>
+              <Typography
+                sx={{
+                  mr: "10px",
+                }}
+              >
+                Logout
+              </Typography>
+
+              <Logout></Logout>
+            </Box>
+            <Link to={"/profile"}><Avatar src={userInfo.user.avatar} alt /></Link>
           </Box>
         )}
       </StyledToolBar>
